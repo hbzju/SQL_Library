@@ -37,14 +37,14 @@ int main()
 void DBTest()
 {
 	int choice;
-	error = SQLAllocEnv(&henv);//·ÖÅä»·¾³
-	error = SQLAllocConnect(henv, &conn);//·ÖÅäÁ¬½Ó
+	error = SQLAllocEnv(&henv);//åˆ†é…ç¯å¢ƒ
+	error = SQLAllocConnect(henv, &conn);//åˆ†é…è¿æ¥
 	error = SQLConnect(conn, "HBdb", SQL_NTS, "SA", SQL_NTS, "whbY52015", SQL_NTS);
 	printf("-----------------------------------\n");
-	printf("\tÑ¡Ôñ²Ù×÷£º\n");
+	printf("\té€‰æ‹©æ“ä½œï¼š\n");
 	while (1){
-		printf("1.Í¼Êé 2.½èÊé 3.»¹Êé 4.Í¼ÊéÈë¿â 5.½èÔÄÖ¤¹ÜÀí 0.ÍË³öÏµÍ³\n");
-		printf("ÇëÊäÈë·şÎñ±àºÅ£º\n");
+		printf("1.å›¾ä¹¦ 2.å€Ÿä¹¦ 3.è¿˜ä¹¦ 4.å›¾ä¹¦å…¥åº“ 5.å€Ÿé˜…è¯ç®¡ç† 0.é€€å‡ºç³»ç»Ÿ\n");
+		printf("è¯·è¾“å…¥æœåŠ¡ç¼–å·ï¼š\n");
 		scanf("%d", &choice);
 		getchar();
 		switch (choice)
@@ -70,11 +70,11 @@ void DBTest()
 			proof_Manage();
 			break;
 		default:
-			printf("·şÎñ±àºÅ´íÎó£¬ÇëÖØĞÂÊäÈë£¡\n");
+			printf("æœåŠ¡ç¼–å·é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼\n");
 		}
 		printf("\n");
 	}
-	MessageBox(NULL, TEXT("Ö´ĞĞ³É¹¦"), TEXT("±êÌâ"), MB_OK);
+	MessageBox(NULL, TEXT("æ‰§è¡ŒæˆåŠŸ"), TEXT("æ ‡é¢˜"), MB_OK);
 }
 void check_Book()
 {
@@ -82,8 +82,8 @@ void check_Book()
 	//cquery means const string query
 	int choice = 0;
 	while (1){
-		printf("1.²éÑ¯È«²¿ 2.°´ÊéÃû²éÑ¯ 3.°´ÊéºÅ²éÑ¯ 0.ÍË³ö\n");
-		printf("ÇëÊäÈëĞèÒªµÄ·şÎñ±àºÅ£º\n");
+		printf("1.æŸ¥è¯¢å…¨éƒ¨ 2.æŒ‰ä¹¦åæŸ¥è¯¢ 3.æŒ‰ä¹¦å·æŸ¥è¯¢ 0.é€€å‡º\n");
+		printf("è¯·è¾“å…¥éœ€è¦çš„æœåŠ¡ç¼–å·ï¼š\n");
 		scanf("%d", &choice);
 		getchar();
 		switch (choice)
@@ -97,7 +97,7 @@ void check_Book()
 			break;
 		case 2:
 			error = SQLAllocStmt(conn, &hstmt);
-			printf("ÊäÈëÊéÃû£º\n");
+			printf("è¾“å…¥ä¹¦åï¼š\n");
 			gets(buff);
 			sprintf(query, "select * from book where title = '%s'", buff);
 			//query="select * from book where ";
@@ -105,14 +105,14 @@ void check_Book()
 			break;
 		case 3:
 			error = SQLAllocStmt(conn, &hstmt);
-			printf("ÊäÈëÊéºÅ£º\n");
+			printf("è¾“å…¥ä¹¦å·ï¼š\n");
 			gets(buff);
 			sprintf(query, "select * from book where bno = '%s'", buff);
 			//query="select * from book where ";
 			book_query(hstmt, query);
 			break;
 		default:
-			printf("·şÎñ±àºÅ´íÎó£¡\n");
+			printf("æœåŠ¡ç¼–å·é”™è¯¯ï¼\n");
 		}
 		printf("\n");
 	}
@@ -121,15 +121,15 @@ void borrow_Book()
 {
 	char query[200],cno[8],bno[11];
 	int choice = 0;
-	int now_Amount = 0;//±ØĞë³õÊ¼»¯...
-	printf("ÊäÈë½èÊéÖ¤ºÅ£º\n");
+	int now_Amount = 0;//å¿…é¡»åˆå§‹åŒ–...
+	printf("è¾“å…¥å€Ÿä¹¦è¯å·ï¼š\n");
 	error = SQLAllocStmt(conn, &hstmt);
 	gets(cno);
 	sprintf(query, "select * from card where cno = %s", cno);
 	if (card_query(hstmt, query) == 0)return;
 	while (1){
-		printf("1.²éÑ¯ÒÑ½èÊé¼® 2.ÊäÈëÊéºÅ½èÊé 0.ÍË³ö\n");
-		printf("ÇëÊäÈëĞèÒªµÄ·şÎñ±àºÅ£º\n");
+		printf("1.æŸ¥è¯¢å·²å€Ÿä¹¦ç± 2.è¾“å…¥ä¹¦å·å€Ÿä¹¦ 0.é€€å‡º\n");
+		printf("è¯·è¾“å…¥éœ€è¦çš„æœåŠ¡ç¼–å·ï¼š\n");
 		scanf("%d", &choice);
 		getchar();
 		switch (choice)
@@ -139,13 +139,13 @@ void borrow_Book()
 		case 1:
 			error = SQLAllocStmt(conn, &hstmt);
 			sprintf(query, "select book.* from book INNER JOIN borrow on book.bno = borrow.bno where borrow.cno = %s ", cno);
-			//×¢Òâ·µ»Ø¸ñÊ½ºÍ²éÑ¯Êé¼®ÏàÍ¬£¬ÕâÀïÎ´°üº¬ÒÑ¹é»¹Í¼ÊéµÄ¼ÇÂ¼
-			printf("ÒÑ½èÊé¼®£º\n");
+			//æ³¨æ„è¿”å›æ ¼å¼å’ŒæŸ¥è¯¢ä¹¦ç±ç›¸åŒï¼Œè¿™é‡ŒæœªåŒ…å«å·²å½’è¿˜å›¾ä¹¦çš„è®°å½•
+			printf("å·²å€Ÿä¹¦ç±ï¼š\n");
 			book_query(hstmt, query);
 			break;
 		case 2:
 			error = SQLAllocStmt(conn, &hstmt);
-			printf("ÇëÊäÈëÊéºÅ½èÔÄÊé¼®£º\n");
+			printf("è¯·è¾“å…¥ä¹¦å·å€Ÿé˜…ä¹¦ç±ï¼š\n");
 			gets(bno);
 			sprintf(query, "select stock from book where bno = %s", bno);
 			now_Amount_query(hstmt, query, &now_Amount);
@@ -153,10 +153,10 @@ void borrow_Book()
 				sprintf(query, "update book set stock = stock - 1 where bno = %s insert into borrow values('%s','%s',DEFAULT,DEFAULT) ",bno,cno,bno);
 				borrow_query(hstmt, query);
 			}
-			else printf("ÊéºÅÊäÈë´íÎó»òÍ¼ÊéÒÑÎŞ¿â´æ£¡\n");
+			else printf("ä¹¦å·è¾“å…¥é”™è¯¯æˆ–å›¾ä¹¦å·²æ— åº“å­˜ï¼\n");
 			break;
 		default:
-			printf("·şÎñ±àºÅ´íÎó£¡\n");
+			printf("æœåŠ¡ç¼–å·é”™è¯¯ï¼\n");
 		}
 		printf("\n");
 	}
@@ -165,15 +165,15 @@ void return_Book()
 {
 	char query[200], cno[8], bno[11];
 	int choice = 0;
-	int now_Amount = 0;//±ØĞë³õÊ¼»¯...
-	printf("ÊäÈë½èÊéÖ¤ºÅ£º\n");
+	int now_Amount = 0;//å¿…é¡»åˆå§‹åŒ–...
+	printf("è¾“å…¥å€Ÿä¹¦è¯å·ï¼š\n");
 	error = SQLAllocStmt(conn, &hstmt);
 	gets(cno);
 	sprintf(query, "select * from card where cno = %s", cno);
 	if (card_query(hstmt, query) == 0)return;
 	while (1){
-		printf("1.²éÑ¯ÒÑ½èÊé¼® 2.ÊäÈëÊéºÅ»¹Êé 0.ÍË³ö\n");
-		printf("ÇëÊäÈëĞèÒªµÄ·şÎñ±àºÅ£º\n");
+		printf("1.æŸ¥è¯¢å·²å€Ÿä¹¦ç± 2.è¾“å…¥ä¹¦å·è¿˜ä¹¦ 0.é€€å‡º\n");
+		printf("è¯·è¾“å…¥éœ€è¦çš„æœåŠ¡ç¼–å·ï¼š\n");
 		scanf("%d", &choice);
 		getchar();
 		switch (choice)
@@ -183,40 +183,43 @@ void return_Book()
 		case 1:
 			error = SQLAllocStmt(conn, &hstmt);
 			sprintf(query, "select book.* from book INNER JOIN borrow on book.bno = borrow.bno where borrow.cno = %s ", cno);
-			//×¢Òâ·µ»Ø¸ñÊ½ºÍ²éÑ¯Êé¼®ÏàÍ¬£¬ÕâÀïÎ´°üº¬ÒÑ¹é»¹Í¼ÊéµÄ¼ÇÂ¼
-			printf("ÒÑ½èÊé¼®£º\n");
+			//æ³¨æ„è¿”å›æ ¼å¼å’ŒæŸ¥è¯¢ä¹¦ç±ç›¸åŒï¼Œè¿™é‡ŒæœªåŒ…å«å·²å½’è¿˜å›¾ä¹¦çš„è®°å½•
+			printf("å·²å€Ÿä¹¦ç±ï¼š\n");
 			book_query(hstmt, query);
 			break;
 		case 2:
 			error = SQLAllocStmt(conn, &hstmt);
-			printf("ÇëÊäÈëÊéºÅ¹é»¹Êé¼®£º\n");
+			printf("è¯·è¾“å…¥ä¹¦å·å½’è¿˜ä¹¦ç±ï¼š\n");
 			gets(bno);
 			sprintf(query, "update book set stock = stock + 1 where bno = %s \
 						    delete from borrow where cno=%s and bno=%s ", bno, cno, bno);
 			return_query(hstmt, query);
 			break;
 		default:
-			printf("·şÎñ±àºÅ´íÎó£¡\n");
+			printf("æœåŠ¡ç¼–å·é”™è¯¯ï¼\n");
 		}
 		printf("\n");
 	}
 }
 void add_Book()
 {
-	char query[300];//´Ë´¦buff×îºÃ¸Ä³Ébno
+	char query[300];//æ­¤å¤„buffæœ€å¥½æ”¹æˆbno
 	int choice = 0;
-	char book_ID[11], book_category[11], book_name[21], press[21], writer[11],cno[8];
+	char book_ID[11], book_category[11], book_name[21], press[21], writer[11],cno[8],Year[5],Price[10],Num[5];
+	char path[50];
 	int year = 0;
 	float price = 0.0;
 	int num = 0,i=0;
-	printf("ÊäÈë¹ÜÀíÔ±¿¨ºÅ£º\n");
+	FILE *fp;
+	char ch=NULL;
+	printf("è¾“å…¥ç®¡ç†å‘˜å¡å·ï¼š\n");
 	error = SQLAllocStmt(conn, &hstmt);
 	gets(cno);
 	sprintf(query, "select * from card where cno = %s and type='M'", cno);
 	if (card_query(hstmt, query) == 0)return;
 	while (1){
-		printf("1.µ¥±¾Èë¿â 2.ÅúÁ¿Èë¿â 0.ÍË³ö\n");
-		printf("ÇëÊäÈëĞèÒªµÄ·şÎñ±àºÅ£º\n");
+		printf("1.å•æœ¬å…¥åº“ 2.æ‰¹é‡å…¥åº“ 0.é€€å‡º\n");
+		printf("è¯·è¾“å…¥éœ€è¦çš„æœåŠ¡ç¼–å·ï¼š\n");
 		scanf("%d", &choice);
 		getchar();
 		switch (choice)
@@ -225,7 +228,7 @@ void add_Book()
 			return;
 		case 1:
 			error = SQLAllocStmt(conn, &hstmt);
-			printf("ÊäÈë£ºÊéºÅ\tÀà±ğ\tÊéÃû\t³ö°æÉç\tÄê·İ\t×÷Õß\t¼Û¸ñ£º£¨ÇëÑÏ¸ñ°´ÕÕ¸ñÊ½ÊäÈë£©\n");
+			printf("è¾“å…¥ï¼šä¹¦å·\tç±»åˆ«\tä¹¦å\tå‡ºç‰ˆç¤¾\tå¹´ä»½\tä½œè€…\tä»·æ ¼ï¼šï¼ˆè¯·ä¸¥æ ¼æŒ‰ç…§æ ¼å¼è¾“å…¥ï¼‰\n");
 			scanf("%s", book_ID);
 			scanf("%s", book_category);
 			scanf("%s", book_name);
@@ -237,22 +240,66 @@ void add_Book()
 			Single_add_query(hstmt, query);
 			break;
 		case 2:
-			printf("ÊäÈëÈë¿âÍ¼ÊéÊıÁ¿£º\n");
-			scanf("%d", &num);
-			printf("ÊäÈë£ºÊéºÅ\tÀà±ğ\tÊéÃû\t³ö°æÉç\tÄê·İ\t×÷Õß\t¼Û¸ñ\t£º£¨ÇëÑÏ¸ñ°´ÕÕ¸ñÊ½ÊäÈë£©\n");
-			scanf("%s", book_ID);
-			scanf("%s", book_category);
-			scanf("%s", book_name);
-			scanf("%s", press);
-			scanf("%d", &year);
-			scanf("%s", writer);
-			scanf("%f", &price);
-			error = SQLAllocStmt(conn, &hstmt);
-			sprintf(query, "if((select count(bno) from book where bno=%s)=0)insert into book values('%s','%s','%s','%s',%d,'%s',%f,%d,%d) else update book set total = total + %d, stock = stock + %d where bno = %s ", book_ID, book_ID, book_category, book_name, press, year, writer, price,num,num,num,num, book_ID);
-			Single_add_query(hstmt, query);
+			printf("è¾“å…¥æ–‡ä»¶ç»å¯¹è·¯å¾„ï¼š\n");
+			gets(path);
+			fp=fopen(path,"r");
+			while(ch!=EOF){
+				i=0;
+				while((ch=fgetc(fp))!=EOF){
+					if(ch==',')break;
+					else book_ID[i++]=ch;
+				}
+				book_ID[i]=0;
+				i=0;
+				while((ch=fgetc(fp))!=EOF){
+					if(ch==',')break;
+					else book_category[i++]=ch;
+				}
+				book_category[i]=0;
+				i=0;
+				while((ch=fgetc(fp))!=EOF){
+					if(ch==',')break;
+					else book_name[i++]=ch;
+				}
+				book_name[i]=0;
+				i=0;
+				while((ch=fgetc(fp))!=EOF){
+					if(ch==',')break;
+					else press[i++]=ch;
+				}
+				press[i]=0;
+				i=0;
+				while((ch=fgetc(fp))!=EOF){
+					if(ch==',')break;
+					else Year[i++]=ch;
+				}
+				Year[i]=0;
+				i=0;
+				while((ch=fgetc(fp))!=EOF){
+					if(ch==',')break;
+					else writer[i++]=ch;
+				}
+				writer[i]=0;
+				i=0;	
+				while((ch=fgetc(fp))!=EOF){
+					if(ch==',')break;
+					else Price[i++]=ch;
+				}
+				Price[i]=0;	
+				while((ch=fgetc(fp))!=EOF){
+					if(ch==';')break;
+					else Num[i++]=ch;
+				}
+				Num[i]=0;				
+			//book_ID, book_category, book_name, press, year, writer, price,num
+				error = SQLAllocStmt(conn, &hstmt);
+				sprintf(query, "if((select count(bno) from book where bno=%s)=0)insert into book values('%s','%s','%s','%s',%s,'%s',%s,%s,%s) else update book set total = total + %s, stock = stock + %s where bno = %s ", book_ID, book_ID, book_category, book_name, press, Year, writer, Price,Num,Num,Num,Num, book_ID);
+				Single_add_query(hstmt, query);
+			}
+			fclose(fp);
 			break;
 		default:
-			printf("·şÎñ±àºÅ´íÎó£¡\n");
+			printf("æœåŠ¡ç¼–å·é”™è¯¯ï¼\n");
 		}
 		printf("\n");
 	}
@@ -263,14 +310,14 @@ void proof_Manage()
 	//cquery means const string query
 	int choice = 0;
 	char cno[8], name[11], department[41], type[2],password[16];
-	printf("ÊäÈë¹ÜÀíÔ±¿¨ºÅ£º\n");
+	printf("è¾“å…¥ç®¡ç†å‘˜å¡å·ï¼š\n");
 	error = SQLAllocStmt(conn, &hstmt);
 	gets(cno);
 	sprintf(query, "select * from card where cno = %s and type='M'", cno);
 	if (card_query(hstmt, query) == 0)return;
 	while (1){
-		printf("1.ĞÂ½¨½èÊé¿¨ 2.É¾³ı½èÊé¿¨ 0.ÍË³ö\n");
-		printf("ÇëÊäÈëĞèÒªµÄ·şÎñ±àºÅ£º\n");
+		printf("1.æ–°å»ºå€Ÿä¹¦å¡ 2.åˆ é™¤å€Ÿä¹¦å¡ 0.é€€å‡º\n");
+		printf("è¯·è¾“å…¥éœ€è¦çš„æœåŠ¡ç¼–å·ï¼š\n");
 		scanf("%d", &choice);
 		getchar();
 		switch (choice)
@@ -279,8 +326,8 @@ void proof_Manage()
 			return;
 		case 1:
 			error = SQLAllocStmt(conn, &hstmt);
-			printf("ÊäÈëÑ§ºÅ»ò¹¤ºÅ\tÃû×Ö\t×¨Òµ\tÀàĞÍ\tÃÜÂë£º\n");
-			//¼ò»¯£¬²»ÓÃ¶¯Ì¬·ÖÅä¿¨ºÅ
+			printf("è¾“å…¥å­¦å·æˆ–å·¥å·\tåå­—\tä¸“ä¸š\tç±»å‹\tå¯†ç ï¼š\n");
+			//ç®€åŒ–ï¼Œä¸ç”¨åŠ¨æ€åˆ†é…å¡å·
 			scanf("%s", cno);
 			scanf("%s", name);
 			scanf("%s", department);
@@ -288,17 +335,17 @@ void proof_Manage()
 			scanf("%s", password);
 			sprintf(query, "select count(cno) from card where cno=%s",cno);
 			if (New_Card_test_query(hstmt, query) != 0){
-				printf("½èÊé¿¨ÒÑ´æÔÚ£¡\n");
+				printf("å€Ÿä¹¦å¡å·²å­˜åœ¨ï¼\n");
 				break;
 			}
-			//²âÊÔÊÇ·ñÒÑÓĞ¶ÔÓ¦µÄ½èÊé¿¨
+			//æµ‹è¯•æ˜¯å¦å·²æœ‰å¯¹åº”çš„å€Ÿä¹¦å¡
 			sprintf(query, "INSERT INTO card values('%s','%s','%s','%s','%s')",cno, name, department, type, password);
 			New_Card_query(hstmt, query);
-			//Ã»ÓĞÒÑÍê³ÉµÄquery´«Èë£¬ĞèÒªÖØĞÂĞ´
+			//æ²¡æœ‰å·²å®Œæˆçš„queryä¼ å…¥ï¼Œéœ€è¦é‡æ–°å†™
 			break;
 		case 2:
 			error = SQLAllocStmt(conn, &hstmt);
-			printf("ÊäÈë¿¨ºÅÈÏÖ¤£º\n");
+			printf("è¾“å…¥å¡å·è®¤è¯ï¼š\n");
 			gets(cno);
 			sprintf(query, "select * from card where cno = %s", cno);
 			if (card_query(hstmt, query) == 0)break;
@@ -306,7 +353,7 @@ void proof_Manage()
 			Delete_Card_query(hstmt, query);
 			break;
 		default:
-			printf("·şÎñ±àºÅ´íÎó£¡\n");
+			printf("æœåŠ¡ç¼–å·é”™è¯¯ï¼\n");
 		}
 		printf("\n");
 	}
@@ -330,9 +377,9 @@ void book_query(HSTMT hstmt, char *query)
 		SQLBindCol(hstmt, 7, SQL_C_FLOAT, &price, 0, &lot[6]);
 		SQLBindCol(hstmt, 8, SQL_C_SHORT, &total_Amount, 0, &lot[7]);
 		SQLBindCol(hstmt, 9, SQL_C_SHORT, &now_Amount, 0, &lot[8]);
-		printf("²éÑ¯½á¹û£º\n");
+		printf("æŸ¥è¯¢ç»“æœï¼š\n");
 		printf("----------------------------\n");
-		printf("ÊéºÅ\tÀà±ğ\tÊéÃû\t³ö°æÉç\tÄê·İ\t×÷Õß\t¼Û¸ñ\t×Ü²ØÊéÁ¿\t¿â´æ\n");
+		printf("ä¹¦å·\tç±»åˆ«\tä¹¦å\tå‡ºç‰ˆç¤¾\tå¹´ä»½\tä½œè€…\tä»·æ ¼\tæ€»è—ä¹¦é‡\tåº“å­˜\n");
 		printf("----------------------------\n");
 		while (SQLFetch(hstmt) != SQL_NO_DATA_FOUND)
 		{
@@ -347,7 +394,7 @@ void book_query(HSTMT hstmt, char *query)
 int card_query(HSTMT hstmt, char *query)
 {
 	int suc = 0;
-	//ÓÃÀ´ÅĞ¶ÏcardÊÇ·ñ´æÔÚ
+	//ç”¨æ¥åˆ¤æ–­cardæ˜¯å¦å­˜åœ¨
 	char Card_ID[8], name[11], department[41], type[2],password[16];
 	char input_password[16];
 	SQLINTEGER lot[5];
@@ -359,25 +406,25 @@ int card_query(HSTMT hstmt, char *query)
 		SQLBindCol(hstmt, 4, SQL_C_CHAR, type, 2, &lot[3]);
 		SQLBindCol(hstmt, 5, SQL_C_CHAR, password, 16, &lot[4]);
 		if (SQLFetch(hstmt) == SQL_NO_DATA_FOUND){
-			printf("¿¨ºÅÊäÈë´íÎó»òÀàĞÍ´íÎó£¡\n");
+			printf("å¡å·è¾“å…¥é”™è¯¯æˆ–ç±»å‹é”™è¯¯ï¼\n");
 			return 0;
 		}
-		printf("ÊäÈëÃÜÂë£º\n");
+		printf("è¾“å…¥å¯†ç ï¼š\n");
 		gets(input_password);
 		if (strcmp(input_password, password)){
 			SQLFreeStmt(hstmt, SQL_CLOSE);
-			printf("ÃÜÂë´íÎó£¡\n\n");
+			printf("å¯†ç é”™è¯¯ï¼\n\n");
 			return 0;
 		}
-		printf("ÈÏÖ¤³É¹¦£¡\n");
-		printf("½èÊé¿¨ĞÅÏ¢£º\n");
+		printf("è®¤è¯æˆåŠŸï¼\n");
+		printf("å€Ÿä¹¦å¡ä¿¡æ¯ï¼š\n");
 		printf("----------------------------\n");
-		printf("¿¨ºÅ\tÃû×Ö\t×¨Òµ\tÀàĞÍ\n");
+		printf("å¡å·\tåå­—\tä¸“ä¸š\tç±»å‹\n");
 		printf("----------------------------\n");
 		printf("%s\t%s\t%s\t%s\t\n", Card_ID, name, department, type);
 		suc = 1;
 	}
-	else printf("ÏµÍ³¹ÊÕÏ\n");
+	else printf("ç³»ç»Ÿæ•…éšœ\n");
 	SQLFreeStmt(hstmt, SQL_CLOSE);
 	printf("\n");
 	return suc;
@@ -391,7 +438,7 @@ void now_Amount_query(HSTMT hstmt, char *query, int *now_Amount)
 		SQLBindCol(hstmt, 1, SQL_C_SHORT, now_Amount, 0, &length);
 		SQLFetch(hstmt);
 	}
-	else printf("Êé¼®²»´æÔÚ£¡\n");
+	else printf("ä¹¦ç±ä¸å­˜åœ¨ï¼\n");
 	SQLFreeStmt(hstmt, SQL_CLOSE);
 }
 
@@ -399,9 +446,9 @@ void borrow_query(HSTMT hstmt, char *query)
 {
 	error = SQLExecDirect(hstmt, query, SQL_NTS);
 	if (error == SQL_SUCCESS){
-		printf("½èÊé³É¹¦£¡\n");
+		printf("å€Ÿä¹¦æˆåŠŸï¼\n");
 	}
-	else printf("ÏµÍ³¹ÊÕÏ£¬ÇëÁªÏµ¹ÜÀíÔ±£¡\n");
+	else printf("ç³»ç»Ÿæ•…éšœï¼Œè¯·è”ç³»ç®¡ç†å‘˜ï¼\n");
 	SQLFreeStmt(hstmt, SQL_CLOSE);
 }
 
@@ -409,9 +456,9 @@ void return_query(HSTMT hstmt, char *query)
 {
 	error = SQLExecDirect(hstmt, query, SQL_NTS);
 	if (error == SQL_SUCCESS){
-		printf("¹é»¹³É¹¦£¡\n");
+		printf("å½’è¿˜æˆåŠŸï¼\n");
 	}
-	else printf("Î´½èÔÄÊé¼®£¡ÇëÈ·ÈÏÊé¼®ÎªÒÑ½èÔÄÊé¼®£¡\n");
+	else printf("æœªå€Ÿé˜…ä¹¦ç±ï¼è¯·ç¡®è®¤ä¹¦ç±ä¸ºå·²å€Ÿé˜…ä¹¦ç±ï¼\n");
 	SQLFreeStmt(hstmt, SQL_CLOSE);
 }
 
@@ -419,9 +466,9 @@ void Single_add_query(HSTMT hstmt, char *query)
 {
 	error = SQLExecDirect(hstmt, query, SQL_NTS);
 	if (error == SQL_SUCCESS){
-		printf("Í¼ÊéÈë¿â³É¹¦£¡\n");
+		printf("å›¾ä¹¦å…¥åº“æˆåŠŸï¼\n");
 	}
-	else printf("ÊäÈë¸ñÊ½´íÎó\n");
+	else printf("è¾“å…¥æ ¼å¼é”™è¯¯\n");
 	SQLFreeStmt(hstmt, SQL_CLOSE);
 }
 
@@ -429,9 +476,9 @@ void New_Card_query(HSTMT hstmt, char *query)
 {
 	error = SQLExecDirect(hstmt, query, SQL_NTS);
 	if (error == SQL_SUCCESS){
-		printf("½èÊé¿¨ĞÂ½¨³É¹¦£¡\n");
+		printf("å€Ÿä¹¦å¡æ–°å»ºæˆåŠŸï¼\n");
 	}
-	else printf("ÏµÍ³¹ÊÕÏ£¡\n");
+	else printf("ç³»ç»Ÿæ•…éšœï¼\n");
 	SQLFreeStmt(hstmt, SQL_CLOSE);
 }
 
@@ -443,7 +490,7 @@ int New_Card_test_query(HSTMT hstmt, char *query)
 	if (error == SQL_SUCCESS){
 		SQLBindCol(hstmt, 1, SQL_C_SHORT, &test, 0, &length);
 	}
-	else printf("ÊäÈë¸ñÊ½´íÎó£¡\n");
+	else printf("è¾“å…¥æ ¼å¼é”™è¯¯ï¼\n");
 	SQLFreeStmt(hstmt, SQL_CLOSE);
 	return test;
 }
@@ -452,8 +499,8 @@ void Delete_Card_query(HSTMT hstmt, char *query)
 {
 	error = SQLExecDirect(hstmt, query, SQL_NTS);
 	if (error == SQL_SUCCESS){
-		printf("½èÊé¿¨É¾³ı³É¹¦£¡\n");
+		printf("å€Ÿä¹¦å¡åˆ é™¤æˆåŠŸï¼\n");
 	}
-	else printf("ÏµÍ³¹ÊÕÏ£¡\n");
+	else printf("ç³»ç»Ÿæ•…éšœï¼\n");
 	SQLFreeStmt(hstmt, SQL_CLOSE);
 }
